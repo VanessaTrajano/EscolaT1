@@ -2,6 +2,7 @@ package br.com.vainaweb.escolat1.model;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import br.com.vainaweb.escolat1.dto.DadosAlunoAtualizados;
 import br.com.vainaweb.escolat1.enums.Curso;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -10,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,6 +46,7 @@ public class AlunoModel {
 	@Embedded
 	private Endereco endereco;
 
+	// |------------------------------------------CONSTRUTORES--------------------------------------|
 	public AlunoModel(String nome, String telefone, String email, String cpf, Curso curso) {
 		this.nome = nome;
 		this.telefone = telefone;
@@ -52,4 +55,13 @@ public class AlunoModel {
 		this.curso = curso;
 	}
 
+	
+	//|------------------------------------------- MÉTODOS --------------------------------|
+	
+	public void atualizarInfo(@Valid DadosAlunoAtualizados dados) {
+		this.nome = dados.nome() != null ? dados.nome() : this.nome;
+		this.telefone = dados.telefone() != null ? dados.telefone() : this.telefone;
+		this.endereco = dados.endereco() != null ? dados.endereco() : this.endereco;
+		this.curso = dados.curso() != null ? dados.curso() : this.curso;
+	}
 }

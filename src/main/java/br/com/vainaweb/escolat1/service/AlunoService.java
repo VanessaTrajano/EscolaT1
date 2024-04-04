@@ -20,14 +20,7 @@ public class AlunoService {
 	}
 	
 	public String cadastrar(DadosAluno dados) {
-		var alunoExistente = repository.findByCpf(dados.cpf());
-		
-		if (dados.cpf() == alunoExistente.get().getCpf()) {
-			return "Aluno ja existeFnte";
-		} else {
-			var aluno = new AlunoModel(dados.nome(), dados.telefone(), dados.email(), dados.cpf(), dados.curso());
-			repository.save(aluno);
-			return "Cadastro Feito";
-		}
+		repository.save(new AlunoModel(dados.nome(), dados.telefone(), dados.email(), dados.cpf(), dados.curso()));
+		return "ok";
 	}
 }
